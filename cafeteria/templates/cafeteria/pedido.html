@@ -1,0 +1,99 @@
+{% extends 'cafeteria/base.html' %}
+{% load static %}
+
+{% block title %} Pedido {% endblock %}
+
+{% block navbar %}
+  {% include 'fragments/navbar.html' %}                  
+{% endblock %} 
+
+{% block banner %} {% endblock %}
+
+{% block pedido %}
+<div class="container align-items-center">
+
+<form action="{% url 'home' %}" method="get" id="send_form">
+
+    <div class="container text-center text-white">
+        <div class="row">
+            <div class="col">
+                Item
+            </div>
+            <div class="col">
+                Quantidade
+            </div>
+            <div class="col">
+                Valor
+            </div>
+            <div class="col">
+                Total
+            </div>
+        </div>
+    </div>
+    
+    <div class="container text-center text-white">
+        {% for n, q, v, t in produtos %}
+        <div class="row">
+            <div class="col">
+                {{n}}
+                <input type="hidden" id="nome_id" name="nome" value="{{n}}">
+            </div>
+            <div class="col">
+                {{q}}
+                <input type="hidden" id="quantidade_id" name="quantidade" value="{{q}}">
+            </div>
+            <div class="col">
+                R$ {{v}}
+                <input type="hidden" id="valor_id" name="valor" value="{{v}}">
+            </div>
+            <div class="col">
+                R$ {{t}}
+                <input type="hidden" id="valor_id" name="valor" value="{{t}}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="form-floating mb-3 mt-4 text-center text-white">
+        <input type="text" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="">
+        <label for="floatingEmptyPlaintextInput">Cliente: {{cliente}}</label>
+    </div>
+    <div class="form-floating mb-3 mt-4 text-center text-white">
+        <input type="text" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="">
+        <label for="floatingEmptyPlaintextInput">Número disco: {{disco}}</label>
+    </div>
+
+    <div class="align-items-center">
+        <div class="input-group mb-3">
+            <!-- <button class="btn btn-outline-secondary" type="button" id="bt_salvar">Salvar</button> -->
+            <input type="text" readonly value="Total: R${{total}}">
+        </div>
+    </div>
+
+    <div class="align-items-center">
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary" type="button" id="bt_salvar">Salvar</button>
+        </div>
+    </div>
+    
+    <div class="align-items-center">
+        <div class="input-group mb-3">
+            <!-- onclick="location.href = 'javascript:window.history.go(-1)'" faz voltar uma página sem perder conteúdo -->
+            <button class="btn btn-outline-secondary" type="button" onclick="location.href = 'javascript:window.history.go(-1)'" id="bt_voltar">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        var button = document.querySelector('#bt_salvar')
+        
+        button.onclick = function() {
+            console.log('Renato')
+            // document.querySelector('#number_prod0').value = '10{{ 7 }}'
+            document.querySelector('#bt_salvar').type = 'submit'
+        }
+    </script>
+
+</form>
+    
+</div>
+    {% endblock %}

@@ -1,0 +1,65 @@
+{% load static %}
+<div class="row">
+    <div class="col">
+        <div class="container bg-danger rounded my-4">
+            <div class="spam text-white text-center display-4 fw-bold">
+                Conheça nossas melhores opções de Café e Cookies
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="{% url 'pedidos' %}" method="get" id="send_form">
+<div class="row my-3">
+    <div class="col-md-10 offset-1">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for produto in produtos %}
+            <div class="col">
+                <div class="card bg-warning p-5" style="height:650px">
+                    <a href="{% url 'produtos' produto.id %}">
+                        <img src="{{ produto.imagem.url }}" class="card-img-top" alt="cafeteria">
+                    </a>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-danger"> {{ produto.nome }}</h5>
+                        <p class="card-text"> {{ produto.descricao }} </p>
+                    </div>
+                    <div class="span display-4 text-end mx-3 text-danger"> R${{produto.preco}} </div>
+                </div>
+                
+                <div class="def-number-input number-input safari_only">
+                    <!-- <input type="number" min="0" class="form-control" aria-label="Amount (to the nearest dollar)" value="0" name="bt_count{{ produto.id }}"> -->
+                    <input id="quantidade_id" min="0" name="quantidade" value="0" type="number">
+                    <input id="nome_id" type="hidden" name="nome" value="{{ produto.nome }}">
+                    <input id="valor_id" type="hidden" name="valor" value="{{ produto.preco }}">
+                </div>
+                
+            </div>
+            {% endfor %}
+            
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="cliente" class="form-control" required id="cliente_id" placeholder="">
+            <label for="floatingInput">Nome do cliente</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" name="disco" min="0" value="0" max="30" id="disco_id" class="form-control" required id="id_disco" placeholder="">
+            <label for="floatingInput">Número do disco de chamada</label>
+        </div>
+
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary" type="button" id="bt_enviar">Adicionar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var button = document.querySelector('#bt_enviar')
+    
+    button.onclick = function() {
+        console.log('Renato')
+        // document.querySelector('#number_prod0').value = '10{{ 7 }}'
+        document.querySelector('#bt_enviar').type = 'submit'
+    }
+    </script>
+</form>

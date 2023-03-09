@@ -1,0 +1,24 @@
+{% extends 'cafeteria/base.html' %}
+{% load static %}
+
+{% block title %} Produtos {% endblock %}
+
+{% block navbar %}
+  {% include 'fragments/navbar.html' %}                  
+{% endblock %} 
+
+{% block banner %} {% endblock %}
+
+{% block content %}
+    <div class="col-md-6 offset-3 d-flex flex-column justify-content-center align-items-center vh-100">
+        <h1 class="text-info text-center mb-5">{{ produto.nome }}</h1>
+        <img src="{{ produto.imagem.url }}" class="card-img-top" alt="cafeteria" style="height: 450px;width: 450px">
+        <h4 class="text-warning text-center">{{ produto.descricao }}</h4>
+        <div class="span display-4 text-info">Apenas R${{ produto.preco }}</div>
+
+        <div>
+          <button class="btn btn-outline-secondary" type="button" onclick="location.href = 'javascript:window.history.go(-1)'" id="bt_voltar">Voltar</button>
+        </div>
+
+    </div>
+{% endblock %}
