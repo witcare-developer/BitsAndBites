@@ -1,0 +1,21 @@
+{% extends 'cafeteria/base.html' %}
+{% load static %}
+
+{% block title %} Pedido Salvo. {% endblock %}
+
+{% block navbar %}
+  {% include 'fragments/navbar.html' %}                  
+{% endblock %} 
+
+{% block banner %} {% endblock %}
+
+{% block content %}
+    <div class="col-md-6 offset-3 d-flex flex-column justify-content-center align-items-center vh-100">
+        <h1 class="text-info text-center mb-5">Cliente {{ cliente }}, pedido {{disco}} no valor de {{total}}, salvos com sucesso.</h1>
+
+        <div>
+            <a class="btn btn-primary" href="{% url 'home' %}" role="button">Voltar</a>
+        </div>
+
+    </div>
+{% endblock %}

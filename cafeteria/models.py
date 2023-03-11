@@ -9,3 +9,20 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+class PedidoCliente(models.Model):
+    nome_cliente = models.TextField(null=False, blank=False)
+    disco_pedido = models.IntegerField(null=False, blank=False)
+    total_geral = models.FloatField(null=False, blank=False)
+    
+    def __str__(self) :
+        return self.nome_cliente
+class Pedidos(models.Model):
+    pedido_cliente =  models.ForeignKey(PedidoCliente, on_delete=models.CASCADE)
+    nome = models.TextField(null=False, blank=False)
+    quantidade = models.IntegerField(null=False, blank=False)
+    valor = models.FloatField(null=False, blank=False)
+    total = models.FloatField(null=False, blank=False)
+
+    def __str__(self) :
+        return self.nome
+    

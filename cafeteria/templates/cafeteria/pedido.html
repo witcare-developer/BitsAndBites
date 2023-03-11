@@ -12,7 +12,7 @@
 {% block pedido %}
 <div class="container align-items-center">
 
-<form action="{% url 'home' %}" method="get" id="send_form">
+<form action="{% url 'pedido_salvo' %}" method="get" id="send_form">
 
     <div class="container text-center text-white">
         <div class="row">
@@ -48,25 +48,25 @@
             </div>
             <div class="col">
                 R$ {{t}}
-                <input type="hidden" id="valor_id" name="valor" value="{{t}}">
+                <input type="hidden" id="total_id" name="total" value="{{t}}">
             </div>
         </div>
         {% endfor %}
     </div>
     
     <div class="form-floating mb-3 mt-4 text-center text-white">
-        <input type="text" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="">
-        <label for="floatingEmptyPlaintextInput">Cliente: {{cliente}}</label>
+        <input type="text" readonly class="form-control-plaintext" value="{{cliente}}" name="cliente" id="cliente_id">
+        <label for="">Cliente: {{cliente}}</label>
     </div>
     <div class="form-floating mb-3 mt-4 text-center text-white">
-        <input type="text" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="">
-        <label for="floatingEmptyPlaintextInput">Número disco: {{disco}}</label>
+        <input type="text" readonly class="form-control-plaintext" value="{{disco}}" name="disco" id="disco_id">
+        <label for="">Número disco: {{disco}}</label>
     </div>
 
     <div class="align-items-center">
         <div class="input-group mb-3">
             <!-- <button class="btn btn-outline-secondary" type="button" id="bt_salvar">Salvar</button> -->
-            <input type="text" readonly value="Total: R${{total}}">
+            <input type="text" readonly value="{{total}}" name="total_geral" id="total_geral_id">
         </div>
     </div>
 

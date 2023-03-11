@@ -1,0 +1,84 @@
+{% extends 'cafeteria/base.html' %}
+{% load static %}
+
+{% block title %} Pedido Salvo. {% endblock %}
+
+{% block navbar %}
+  {% include 'fragments/navbar.html' %}                  
+{% endblock %} 
+
+{% block banner %} {% endblock %}
+
+{% block content %}
+    <div class="col-md-4 offset-3 d-flex flex-column justify-content-center align-items-center vh-10">
+        <h1 class="text-info text-center mb-5">Painel de pedidos</h1>
+
+        {% for p in pedido_cliente %}
+
+        {% for n in pedidos %}
+        {% if n.pedido_cliente_id == p.id %}
+        <div class="container text-center text-white mb-5">
+            <div class="row">
+                <div class="col">
+                    {{n.nome}}
+                </div>
+                <div class="col">
+                    {{n.quantidade}}
+                </div>
+                <div class="col">
+                    {{n.valor}}
+                </div>
+                <div class="col">
+                    {{n.total}}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+        <div class="input-group mb-3">
+            <!-- <div class="form-floating">
+                <input type="text" readonly class="form-control" value="{{ p.pedido_cliente.id }}">
+                <label for="floatingInputGroup1">Numero pedido</label>
+            </div> -->
+            <div class="form-floating">
+                <input type="text" readonly class="form-control" value="{{p.nome_cliente}}">
+                <label for="floatingInputGroup1">Nome Cliente</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" readonly class="form-control" value="{{p.disco_pedido}}">
+                <label for="floatingInputGroup1">Disco para chamada</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" readonly class="form-control" value="{{p.total_geral}}">
+                <label for="floatingInputGroup1">Valor</label>
+            </div>
+        </div>
+        
+        <form action="{% url 'home' %}" method="get" id="send_form_id">
+            <div class="form-check mb-5">
+                <input class="form-check-input" type = "checkbox" id = "finalizar_pedido_id" name = "finalizar_pedido" value = "{{p.id}}">
+                <label class="form-check-label text-white" for = "finalizar_pedido_id"> Selecionar para finalizar </label>
+            </div>
+            
+            {% endfor %}
+            
+            <div class="align-items-center">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary" type="button" id="bt_salvar">Finalizar Pedido(s)</button>
+                </div>
+            </div>
+
+            <script>
+                var button = document.querySelector('#bt_salvar')
+                
+                button.onclick = function() {
+                    console.log('Renato')
+                    // document.querySelector('#number_prod0').value = '10{{ 7 }}'
+                    document.querySelector('#bt_salvar').type = 'submit'
+                }
+            </script>
+
+        </form>
+    </div>
+{% endblock %}
