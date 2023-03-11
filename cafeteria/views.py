@@ -133,16 +133,16 @@ def painel(request):
 
         if p.pedido_cliente_id != id_old:
             cliente.append(PedidoCliente.objects.get(id=p.pedido_cliente_id))
-            print(f'CLIENTE: {cliente}')
+            # print(f'CLIENTE: {cliente}')
         
         id_old = p.pedido_cliente_id
         
-        print(f'Pdedido n.: {p.pedido_cliente_id}')
-        print(f'Nome produto: {p.nome}')
-        print(f'Quatidade: {p.quantidade}')
-        print(f'Valor: {p.valor}')
-        print(f'Valor total: {p.total}')
-        print("######################")
+        # print(f'Pdedido n.: {p.pedido_cliente_id}')
+        # print(f'Nome produto: {p.nome}')
+        # print(f'Quatidade: {p.quantidade}')
+        # print(f'Valor: {p.valor}')
+        # print(f'Valor total: {p.total}')
+        # print("######################")
 
         # for n in pedido_clientes.
 
@@ -160,3 +160,19 @@ def painel(request):
     }
 
     return render(request, 'cafeteria/painel_pedidos.html', context=context)
+
+def finalizar_pedido(request):
+
+    deletar = dict(request.GET)
+
+    for d in deletar['finalizar_pedido']:
+        print(d)
+        pedido = Pedidos.objects.get(id=int(d))
+        cliente = PedidoCliente.objects.get(id=int(d))
+
+        pedido.delete()
+        cliente.delete()
+
+    print(deletar)
+    
+    return redirect('painel')

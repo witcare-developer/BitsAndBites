@@ -39,7 +39,7 @@
             
         </div>
         <div class="form-floating mb-3">
-            <input type="text" name="cliente" class="form-control" required id="cliente_id" placeholder="">
+            <input type="text" name="cliente" class="form-control" required id="cliente_id" placeholder="" value="Cliente">
             <label for="floatingInput">Nome do cliente</label>
         </div>
         <div class="form-floating mb-3">
@@ -55,10 +55,15 @@
 
 <script>
     var button = document.querySelector('#bt_enviar')
+    var cliente = document.querySelector('#cliente_id')
+    var disco = document.querySelector('#disco_id')
     
     button.onclick = function() {
         console.log('Renato')
         // document.querySelector('#number_prod0').value = '10{{ 7 }}'
+
+        document.querySelector('#cliente_id').value = 'Cliente_'+document.querySelector('#disco_id').value
+
         document.querySelector('#bt_enviar').type = 'submit'
     }
     </script>

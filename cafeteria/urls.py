@@ -11,4 +11,5 @@ urlpatterns = [
     path('pedidos/', views.pedidos, name='pedidos'),
     path('pedido_salvo/', views.pedido_salvo, name='pedido_salvo'),
     path('painel/', views.painel, name='painel'),
+    path('finalizar_pedido/', views.finalizar_pedido, name='finalizar_pedido'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
