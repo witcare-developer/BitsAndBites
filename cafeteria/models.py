@@ -13,6 +13,7 @@ class PedidoCliente(models.Model):
     nome_cliente = models.TextField(null=False, blank=False)
     disco_pedido = models.IntegerField(null=False, blank=False)
     total_geral = models.FloatField(null=False, blank=False)
+    finalizado = models.BooleanField(default=False)
     
     def __str__(self) :
         return self.nome_cliente

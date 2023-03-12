@@ -99,6 +99,7 @@ def pedido_salvo(request):
     cliente_pedido.nome_cliente = new_cliente[0]
     cliente_pedido.disco_pedido = new_disco[0]
     cliente_pedido.total_geral = float(new_total_geral[0])
+    cliente_pedido.finalizado = False
     cliente_pedido.save()
 
     for i in range(l):
@@ -129,50 +130,64 @@ def painel(request):
     id_old = -1
     cliente = []
 
-    for p in pedidos:
+    if len(pedidos) > 0:
 
-        if p.pedido_cliente_id != id_old:
-            cliente.append(PedidoCliente.objects.get(id=p.pedido_cliente_id))
-            # print(f'CLIENTE: {cliente}')
-        
-        id_old = p.pedido_cliente_id
-        
-        # print(f'Pdedido n.: {p.pedido_cliente_id}')
-        # print(f'Nome produto: {p.nome}')
-        # print(f'Quatidade: {p.quantidade}')
-        # print(f'Valor: {p.valor}')
-        # print(f'Valor total: {p.total}')
-        # print("######################")
+        for p in pedidos:
 
-        # for n in pedido_clientes.
+            if p.pedido_cliente_id != id_old:
+                cliente.append(PedidoCliente.objects.get(id=p.pedido_cliente_id))
+                # print(f'CLIENTE: {cliente}')
+            
+            id_old = p.pedido_cliente_id
+            
+            # print(f'Pdedido n.: {p.pedido_cliente_id}')
+            # print(f'Nome produto: {p.nome}')
+            # print(f'Quatidade: {p.quantidade}')
+            # print(f'Valor: {p.valor}')
+            # print(f'Valor total: {p.total}')
+            # print("######################")
 
-    # for n in pedidos:
-    #     print(n.pedido_cliente_id)
-    #     print(n.nome)
-    #     print(n.quantidade)
-    #     print(n.valor)
-    #     print(n.total)
-    #     print("######################")
+            # for n in pedido_clientes.
 
-    context = {
-        'pedido_cliente': cliente,
-        'pedidos': pedidos
-    }
+        # for n in pedidos:
+        #     print(n.pedido_cliente_id)
+        #     print(n.nome)
+        #     print(n.quantidade)
+        #     print(n.valor)
+        #     print(n.total)
+        #     print("######################")
 
-    return render(request, 'cafeteria/painel_pedidos.html', context=context)
+        context = {
+            'pedido_cliente': cliente,
+            'pedidos': pedidos
+        }
+        return render(request, 'cafeteria/painel_pedidos.html', context=context)
+    else:
+        return redirect('home')
+
+
 
 def finalizar_pedido(request):
 
     deletar = dict(request.GET)
 
-    for d in deletar['finalizar_pedido']:
-        print(d)
-        pedido = Pedidos.objects.get(id=int(d))
-        cliente = PedidoCliente.objects.get(id=int(d))
+    try:
+    
+        for d in deletar['finalizar_pedido']:
+            try:
+                print(d)
+                pedido = Pedidos.objects.filter(pedido_cliente_id=int(d))
 
-        pedido.delete()
-        cliente.delete()
+                cliente = PedidoCliente.objects.filter(id=int(d))
 
-    print(deletar)
+                pedido.delete()
+                cliente.delete()
+            except:
+                print('Registro não existe...')
+    except:
+        print("Não foi selecionado nenhum item.")
+        
+
+    
     
     return redirect('painel')

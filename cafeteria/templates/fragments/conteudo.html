@@ -1,4 +1,5 @@
 {% load static %}
+
 <div class="row">
     <div class="col">
         <div class="container bg-danger rounded my-4">
@@ -39,7 +40,7 @@
             
         </div>
         <div class="form-floating mb-3">
-            <input type="text" name="cliente" class="form-control" required id="cliente_id" placeholder="" value="Cliente">
+            <input type="hidden" name="cliente" class="form-control" required id="cliente_id" placeholder="" value="Cliente">
             <label for="floatingInput">Nome do cliente</label>
         </div>
         <div class="form-floating mb-3">
@@ -62,9 +63,13 @@
         console.log('Renato')
         // document.querySelector('#number_prod0').value = '10{{ 7 }}'
 
-        document.querySelector('#cliente_id').value = 'Cliente_'+document.querySelector('#disco_id').value
+        // if( document.querySelector('#quantidade_id').value != 0 ){
 
-        document.querySelector('#bt_enviar').type = 'submit'
+            document.querySelector('#cliente_id').value = 'Cliente_'+document.querySelector('#disco_id').value
+    
+            document.querySelector('#bt_enviar').type = 'submit'
+        // }
+
     }
     </script>
 </form>
