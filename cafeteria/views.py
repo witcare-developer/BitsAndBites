@@ -170,18 +170,28 @@ def painel(request):
 def finalizar_pedido(request):
 
     deletar = dict(request.GET)
+    valor = []
+
+    cliente = PedidoCliente.objects.all()
+    for c in deletar.keys():
+        # print(deletar[c][0])
+        valor.append(deletar[c][0])
+
+    # print(deletar.keys())
 
     try:
     
-        for d in deletar['finalizar_pedido']:
+        id_delete = zip( cliente, valor )
+        for d, c in id_delete:
+            print(type(c))
             try:
-                print(d)
-                pedido = Pedidos.objects.filter(pedido_cliente_id=int(d))
+                if c == 'true':
+                    pedido = Pedidos.objects.filter(pedido_cliente_id=int(d.id))
 
-                cliente = PedidoCliente.objects.filter(id=int(d))
+                    cliente = PedidoCliente.objects.filter(id=int(d.id))
 
-                pedido.delete()
-                cliente.delete()
+                    pedido.delete()
+                    cliente.delete()
             except:
                 print('Registro não existe...')
     except:
