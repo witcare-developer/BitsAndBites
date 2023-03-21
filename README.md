@@ -14,6 +14,7 @@ senha criada: 1234
 
 python manage.py shell
 
+
 2 - Comando para gerar ambiente virtual:
     python -m venv <pasta-desejada>
 
