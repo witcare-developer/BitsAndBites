@@ -2,6 +2,9 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from cafeteria.models import Produto
 from cafeteria.models import PedidoCliente, Pedidos
+from serial import Serial
+
+SERIAL_PORT = "COM4"
 
 # Create your views here.
 def home(request):
@@ -73,6 +76,10 @@ def pedido_salvo(request):
     disco = dict(request.GET)
     total_geral = dict(request.GET)
 
+    ser = Serial(SERIAL_PORT, 19200, timeout=1)
+    pedido_str = ""
+    itens_str = ""
+
     l = len(nome['nome'])
 
     new_nome = []
@@ -94,24 +101,37 @@ def pedido_salvo(request):
         new_valor.append(valor['valor'][i])
         new_total.append(total['total'][i])
 
-    cliente_pedido = PedidoCliente()
+    try:
 
-    cliente_pedido.nome_cliente = new_cliente[0]
-    cliente_pedido.disco_pedido = new_disco[0]
-    cliente_pedido.total_geral = float(new_total_geral[0])
-    cliente_pedido.finalizado = False
-    cliente_pedido.save()
+        cliente_pedido = PedidoCliente()
+
+        cliente_pedido.nome_cliente = new_cliente[0]
+        cliente_pedido.disco_pedido = new_disco[0]
+        cliente_pedido.total_geral = float(new_total_geral[0])
+        cliente_pedido.finalizado = False
+        cliente_pedido.save()
+        pedido_str = str.encode(f"Cliente: {new_cliente[0]}\nNumero Disco: {new_disco[0]}\n")
+        ser.write(pedido_str)
+    except:
+        print("Não foi possivel Salvar pedido.")
 
     for i in range(l):
-        pedidos = Pedidos()
-        pedidos.nome = new_nome[i]
-        pedidos.quantidade = new_quantidade[i]
-        pedidos.valor = new_valor[i]
-        pedidos.total = new_total[i]
-        pedidos.pedido_cliente = cliente_pedido
+        try:
+            pedidos = Pedidos()
+            pedidos.nome = new_nome[i]
+            pedidos.quantidade = new_quantidade[i]
+            pedidos.valor = new_valor[i]
+            pedidos.total = new_total[i]
+            pedidos.pedido_cliente = cliente_pedido
+            pedidos.save()
 
-        pedidos.save()
-
+            itens_str = str.encode(f"Item: {new_nome[i]}\nQuantidade: {new_quantidade[i]}\n")
+            ser.write(itens_str)
+            
+        except:
+            print("Não foi possível Salvar itens de Pedido.")
+    ser.write(b"#######################\n\n")
+    ser.close()
     context = {
         'cliente': new_cliente[0],
         'disco': new_disco[0],
@@ -139,23 +159,6 @@ def painel(request):
                 # print(f'CLIENTE: {cliente}')
             
             id_old = p.pedido_cliente_id
-            
-            # print(f'Pdedido n.: {p.pedido_cliente_id}')
-            # print(f'Nome produto: {p.nome}')
-            # print(f'Quatidade: {p.quantidade}')
-            # print(f'Valor: {p.valor}')
-            # print(f'Valor total: {p.total}')
-            # print("######################")
-
-            # for n in pedido_clientes.
-
-        # for n in pedidos:
-        #     print(n.pedido_cliente_id)
-        #     print(n.nome)
-        #     print(n.quantidade)
-        #     print(n.valor)
-        #     print(n.total)
-        #     print("######################")
 
         context = {
             'pedido_cliente': cliente,
