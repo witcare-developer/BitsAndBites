@@ -76,7 +76,7 @@ def pedido_salvo(request):
     disco = dict(request.GET)
     total_geral = dict(request.GET)
 
-    ser = Serial(SERIAL_PORT, 19200, timeout=1)
+
     pedido_str = ""
     itens_str = ""
 
@@ -95,13 +95,20 @@ def pedido_salvo(request):
     new_disco.append(disco['disco'][0])
     new_total_geral.append(total_geral['total_geral'][0])
 
-    for i in range(l):
-        new_nome.append(nome['nome'][i])
-        new_quantidade.append(quantidade['quantidade'][i])
-        new_valor.append(valor['valor'][i])
-        new_total.append(total['total'][i])
-
     try:
+        tem_porta = True
+        try:
+            ser = Serial(SERIAL_PORT, 19200, timeout=1)
+        except:
+            print('Erro de comunicação com porta serial.')
+            tem_porta = False
+        for i in range(l):
+            new_nome.append(nome['nome'][i])
+            new_quantidade.append(quantidade['quantidade'][i])
+            new_valor.append(valor['valor'][i])
+            new_total.append(total['total'][i])
+
+    
 
         cliente_pedido = PedidoCliente()
 
@@ -111,12 +118,11 @@ def pedido_salvo(request):
         cliente_pedido.finalizado = False
         cliente_pedido.save()
         pedido_str = str.encode(f"Cliente: {new_cliente[0]}\nNumero Disco: {new_disco[0]}\n")
-        ser.write(pedido_str)
-    except:
-        print("Não foi possivel Salvar pedido.")
+        if tem_porta == True:
+            ser.write(pedido_str)
 
-    for i in range(l):
-        try:
+        for i in range(l):
+        
             pedidos = Pedidos()
             pedidos.nome = new_nome[i]
             pedidos.quantidade = new_quantidade[i]
@@ -126,12 +132,13 @@ def pedido_salvo(request):
             pedidos.save()
 
             itens_str = str.encode(f"Item: {new_nome[i]}\nQuantidade: {new_quantidade[i]}\n")
-            ser.write(itens_str)
-            
-        except:
-            print("Não foi possível Salvar itens de Pedido.")
-    ser.write(b"#######################\n\n")
-    ser.close()
+            if tem_porta == True:
+                ser.write(itens_str)
+        if tem_porta == True:
+            ser.write(b"#######################\n\n")
+            ser.close()
+    except:
+        print('Não foi possível salvar dados.')
     context = {
         'cliente': new_cliente[0],
         'disco': new_disco[0],
