@@ -51,4 +51,4 @@ python manage.py shell
 7 - por fim rodar o comando do Django:
     python manage.py runserver 0.0.0.0:80
 
-    Onde o argumento 0.0.0.0:80 diz para o servidor django que qualquer dispositivo da rede pode acessar a aplicação. O 80 depois do dois pontos, o número é a porta da rede. O 80 é a porta padrão da internet mas pode ser outras portas também.
+    Onde o argumento 0.0.0.0 antes dos dois pontos diz para o servidor django que qualquer dispositivo da rede pode acessar a aplicação. O 80 depois do dois pontos é a porta da rede. O 80 é a porta padrão da internet mas pode ser outras portas também como 8000 ou 3300.

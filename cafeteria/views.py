@@ -160,7 +160,7 @@ def painel(request):
             
             id_old = p.pedido_cliente_id
 
-        context = {
+        context = { 
             'pedido_cliente': cliente,
             'pedidos': pedidos
         }
