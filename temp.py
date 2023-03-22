@@ -1,3 +1,5 @@
+# Teste para impressora Dematech MP-4200
+
 from serial import Serial
 
 ser  = Serial('/dev/tty.usbmodem141401', 19200, timeout=1)
