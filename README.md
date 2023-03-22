@@ -1,3 +1,7 @@
+# Bts and BItes
+
+```text
+
 django-admin startproject core .
 
 python manage.py runserver
@@ -13,9 +17,17 @@ python manage.py createsuperuser
 senha criada: 1234
 
 python manage.py shell
+```
+
+```text
 
 2 - Comando para gerar ambiente virtual:
     python -m venv <pasta-desejada>
+
+    após fazer isso instalar as dependências do python no ambiente virtual com o comando:
+    pip install -r requirements.txt
+    se houver atualizações dos pacotes pode-se atualizar o arquivo requirements.txt com:
+    pip freeze > requirements.txt
 
 3 - Para rodar o ambiente virtual
     Linux, Mac ...
@@ -46,9 +58,16 @@ python manage.py shell
     A impressora já vem com Drive serial, quando conectar a impressora, basta procurar no seu sistema a porta 'COMX' relativo a impressora.
 
     Feito isso vá no arquivo views.py e na variável:
-    SERIAL_PORT = "COM4" coloque a COMX correspondente. 
+    SERIAL_PORT = "COM4" coloque a COMX correspondente.
+
+    Em sistemas baseado em unix:
+    Abra o terninal e digite:
+    ls /dev/tty.*
+    Isso mostrará as portas disponíveis e eventualmente a porta onte está a ipressora.
 
 7 - por fim rodar o comando do Django:
     python manage.py runserver 0.0.0.0:80
 
     Onde o argumento 0.0.0.0 antes dos dois pontos diz para o servidor django que qualquer dispositivo da rede pode acessar a aplicação. O 80 depois do dois pontos é a porta da rede. O 80 é a porta padrão da internet mas pode ser outras portas também como 8000 ou 3300.
+
+```
