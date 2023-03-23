@@ -71,3 +71,6 @@ python manage.py shell
     Onde o argumento 0.0.0.0 antes dos dois pontos diz para o servidor django que qualquer dispositivo da rede pode acessar a aplicação. O 80 depois do dois pontos é a porta da rede. O 80 é a porta padrão da internet mas pode ser outras portas também como 8000 ou 3300.
 
 ```
+```text
+https://gist.github.com/boniattirodrigo/67429ada53b7337d2e79
+```
